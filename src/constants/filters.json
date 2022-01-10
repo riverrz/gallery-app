@@ -1,0 +1,38 @@
+[
+  {
+    "label": "Color",
+    "key": "color",
+    "choices": [
+      {
+        "label": "Any color",
+        "value": "*"
+      },
+      {
+        "label": "Black and White",
+        "value": "black_and_white"
+      }
+    ]
+  },
+  {
+    "label": "Orientation",
+    "key": "orientation",
+    "choices": [
+      {
+        "label": "Any",
+        "value": "*"
+      },
+      {
+        "label": "Portrait",
+        "value": "portrait"
+      },
+      {
+        "label": "Landscape",
+        "value": "landscape"
+      },
+      {
+        "label": "Square",
+        "value": "squarish"
+      }
+    ]
+  }
+]
