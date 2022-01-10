@@ -1,0 +1,15 @@
+.container {
+  position: relative;
+}
+.search-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 1rem;
+}
+.search-input {
+  outline: none;
+  padding-left: 2rem;
+  border-radius: 15px;
+  line-height: 150%;
+}
