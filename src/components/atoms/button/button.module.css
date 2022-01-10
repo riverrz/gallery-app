@@ -1,0 +1,15 @@
+.btn {
+  padding: 1rem 2rem;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+  border-radius: 15px;
+}
+.btn--primary {
+  background-color: dodgerblue;
+  color: #fff;
+}
+.btn--secondary {
+  background-color: #bbb;
+  color: #333;
+}
