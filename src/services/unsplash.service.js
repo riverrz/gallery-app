@@ -15,5 +15,5 @@ export async function searchPhotosByQuery({ query, page, per_page }) {
       client_id: process.env.REACT_APP_UNSPLASH_ACCESS_KEY,
     },
   });
-  return response.data.results;
+  return response.data;
 }

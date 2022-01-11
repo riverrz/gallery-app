@@ -14,10 +14,11 @@ function App() {
     []
   );
 
-  const { data, loading, error, handleLoadDataLazily } = useApi({
-    fetcher: getSearchResults,
-    itemsPerPage: 12,
-  });
+  const { data, loading, error, handleLoadDataLazily, totalPages, finished } =
+    useApi({
+      fetcher: getSearchResults,
+      itemsPerPage: 12,
+    });
 
   function handleSearchValChange(e) {
     const { value } = e.target;
@@ -26,9 +27,9 @@ function App() {
 
   useEffect(() => {
     if (searchVal) {
-      handleLoadDataLazily(searchVal);
+      handleLoadDataLazily(searchVal, true);
     }
-  }, [searchVal, handleLoadDataLazily]);
+  }, [searchVal]);
 
   return (
     <main className="container">

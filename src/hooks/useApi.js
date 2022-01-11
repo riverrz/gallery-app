@@ -14,6 +14,7 @@ export default function useApi({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [page, setPage] = useState(initialPage);
+  const [totalPages, setTotalPages] = useState(0);
 
   const handleLoadData = useCallback(
     async (params, pagination = false) => {
@@ -30,13 +31,26 @@ export default function useApi({
           paginationPayload.page = initialPage;
         } else {
           let newPage = page + 1;
+          if (totalPages && newPage > totalPages) {
+            // reached the last page
+            return;
+          }
           paginationPayload.page = newPage;
           setPage(newPage);
         }
-        const response = await fetcher(params, paginationPayload);
-        let newData = response;
+        const { results, total_pages } = await fetcher(
+          params,
+          paginationPayload
+        );
+        let newData = results;
         if (pagination) {
-          newData = data.concat(response);
+          newData = data.concat(results);
+          setTotalPages((prev) => {
+            if (prev) {
+              return prev;
+            }
+            return total_pages;
+          });
         }
         setData(newData);
       } catch (err) {
@@ -45,7 +59,7 @@ export default function useApi({
         setLoading(false);
       }
     },
-    [fetcher, page, itemsPerPage]
+    [fetcher, page, itemsPerPage, totalPages]
   );
 
   const handleLoadDataLazily = useMemo(() => {
@@ -59,5 +73,7 @@ export default function useApi({
     hasError: !!error,
     handleLoadData,
     handleLoadDataLazily,
+    totalPages,
+    finished: !!page && page === totalPages,
   };
 }
