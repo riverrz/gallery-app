@@ -71,7 +71,7 @@ export default function useApi({
     hasError: !!error,
     handleLoadData,
     totalPages,
-    finished: page === totalPages,
+    finished: !totalPages || page === totalPages,
     page,
   };
 }
