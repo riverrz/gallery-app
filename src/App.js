@@ -1,7 +1,8 @@
 import { useState, useCallback, useEffect } from "react";
 import useApi from "./hooks/useApi";
 import { searchCollectionsByQuery } from "./services/unsplash.service";
-import { Search } from "./components/atoms";
+import { Button, Search } from "./components/atoms";
+import ImageGrid from "./components/ImageGrid";
 
 function App() {
   const [appliedFilters, setAppliedFilters] = useState({});
@@ -15,6 +16,7 @@ function App() {
 
   const { data, loading, error, handleLoadDataLazily } = useApi({
     fetcher: getSearchResults,
+    itemsPerPage: 12,
   });
 
   function handleSearchValChange(e) {
@@ -23,13 +25,25 @@ function App() {
   }
 
   useEffect(() => {
-    handleLoadDataLazily(searchVal);
-  }, [searchVal]);
+    if (searchVal) {
+      handleLoadDataLazily(searchVal);
+    }
+  }, [searchVal, handleLoadDataLazily]);
 
   return (
     <main className="container">
       <div className="flex perfect-center">
-        <Search value={searchVal} onChange={handleSearchValChange} />
+        <div className="mr-12 flex-grow">
+          <Search value={searchVal} onChange={handleSearchValChange} />
+        </div>
+        <div>
+          <Button>Filters</Button>
+        </div>
+      </div>
+      <div className="mt-12">
+        <ImageGrid data={data} />
+        {loading && <p>Loading...</p>}
+        {error && <p>{error.message}</p>}
       </div>
     </main>
   );

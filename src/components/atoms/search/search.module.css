@@ -9,7 +9,9 @@
 }
 .search-input {
   outline: none;
-  padding-left: 2rem;
+  padding: 10px 3rem;
   border-radius: 15px;
-  line-height: 150%;
+  font-size: 1.2rem;
+  display: block;
+  width: 100%;
 }
