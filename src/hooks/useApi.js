@@ -1,5 +1,4 @@
-import { useState, useCallback, useMemo } from "react";
-import debounce from "lodash.debounce";
+import { useState, useCallback } from "react";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -17,7 +16,7 @@ export default function useApi({
   const [totalPages, setTotalPages] = useState(0);
 
   const handleLoadData = useCallback(
-    async (params, pagination = false) => {
+    async (params, pagination = false, reset = true) => {
       try {
         setLoading(true);
         setError(null);
@@ -25,12 +24,13 @@ export default function useApi({
           page,
           itemsPerPage,
         };
-        if (!pagination) {
-          setPage(initialPage);
+        if (!pagination || reset) {
+          const newPage = initialPage ? initialPage : 1;
+          setPage(newPage);
           setData(initialData);
-          paginationPayload.page = initialPage;
+          paginationPayload.page = newPage;
         } else {
-          let newPage = page + 1;
+          const newPage = page + 1;
           if (totalPages && newPage > totalPages) {
             // reached the last page
             return;
@@ -44,7 +44,9 @@ export default function useApi({
         );
         let newData = results;
         if (pagination) {
-          newData = data.concat(results);
+          if (!reset) {
+            newData = data.concat(results);
+          }
           setTotalPages((prev) => {
             if (prev) {
               return prev;
@@ -59,12 +61,8 @@ export default function useApi({
         setLoading(false);
       }
     },
-    [fetcher, page, itemsPerPage, totalPages]
+    [fetcher, page, itemsPerPage, totalPages, data, initialPage, initialData]
   );
-
-  const handleLoadDataLazily = useMemo(() => {
-    return debounce(handleLoadData, debounceTimeout);
-  }, [handleLoadData, debounceTimeout]);
 
   return {
     data,
@@ -72,8 +70,8 @@ export default function useApi({
     error,
     hasError: !!error,
     handleLoadData,
-    handleLoadDataLazily,
     totalPages,
-    finished: !!page && page === totalPages,
+    finished: page === totalPages,
+    page,
   };
 }
