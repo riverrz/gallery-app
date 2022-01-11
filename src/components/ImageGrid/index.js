@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Card, ResponsiveGrid } from "../atoms";
 import { ModalContext } from "../../contexts/modal.context";
-import FullImageView from "../fullImageView";
+import FullImageView from "../FullImageView";
 
 function ImageGrid({ data }) {
   const { openModal } = useContext(ModalContext);
