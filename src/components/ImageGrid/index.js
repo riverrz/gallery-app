@@ -7,9 +7,15 @@ function ImageGrid({ data }) {
   }
   return (
     <ResponsiveGrid>
-      {data.map(({ cover_photo: { urls }, description, id }) => {
+      {data.map(({ urls, description, alt_description, id }) => {
         const { thumb } = urls;
-        return <Card imgUrl={thumb} alt={description} key={id} />;
+        return (
+          <Card
+            imgUrl={thumb}
+            description={description || alt_description}
+            key={id}
+          />
+        );
       })}
     </ResponsiveGrid>
   );

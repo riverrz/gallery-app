@@ -6,8 +6,8 @@ const axios = coreAxios.create({
   baseURL: BASE_URL,
 });
 
-export async function searchCollectionsByQuery({ query, page, per_page }) {
-  const response = await axios.get(`/search/collections`, {
+export async function searchPhotosByQuery({ query, page, per_page }) {
+  const response = await axios.get(`/search/photos`, {
     params: {
       query,
       page,

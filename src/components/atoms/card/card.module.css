@@ -3,4 +3,21 @@
   min-height: 200px;
   border-radius: 30px;
   overflow: hidden;
+  position: relative;
+}
+.container:hover > .description {
+  opacity: 1;
+}
+.description {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  opacity: 0;
+  transition: all 0.5s;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: capitalize;
+  text-align: center;
 }

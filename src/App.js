@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import useApi from "./hooks/useApi";
-import { searchCollectionsByQuery } from "./services/unsplash.service";
+import { searchPhotosByQuery } from "./services/unsplash.service";
 import { Button, Search } from "./components/atoms";
 import ImageGrid from "./components/ImageGrid";
 
@@ -10,7 +10,7 @@ function App() {
 
   const getSearchResults = useCallback(
     (query, { page, itemsPerPage }) =>
-      searchCollectionsByQuery({ query, page, per_page: itemsPerPage }),
+      searchPhotosByQuery({ query, page, per_page: itemsPerPage }),
     []
   );
 
