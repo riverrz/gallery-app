@@ -5,7 +5,7 @@ import {
   searchPhotosByQuery,
   getCollectionPhotos,
 } from "./services/unsplash.service";
-import { Button, Search } from "./components/atoms";
+import { Button, Loader, Search } from "./components/atoms";
 import ImageGrid from "./components/ImageGrid";
 import Filters from "./components/Filters";
 import InfiniteScroll from "./hoc/InfiniteScroll";
@@ -83,7 +83,11 @@ function App() {
           )}
           <ImageGrid data={data} />
         </InfiniteScroll>
-        {loading && <p>Loading...</p>}
+        {loading && (
+          <p className="text-center">
+            <Loader />
+          </p>
+        )}
         {error && <p>{error.message}</p>}
       </div>
     </main>
