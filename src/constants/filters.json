@@ -1,5 +1,19 @@
 [
   {
+    "label": "Sort",
+    "key": "sort",
+    "choices": [
+      {
+        "label": "Relevance",
+        "value": "relevant"
+      },
+      {
+        "label": "Newest",
+        "value": "latest"
+      }
+    ]
+  },
+  {
     "label": "Color",
     "key": "color",
     "choices": [

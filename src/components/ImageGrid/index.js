@@ -7,7 +7,6 @@ function ImageGrid({ data }) {
   }
   return (
     <ResponsiveGrid>
-      {data.length === 0 && <p className="text-center">No results found</p>}
       {data.map(({ urls, description, alt_description, id }) => {
         const { thumb } = urls;
         return (

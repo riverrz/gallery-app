@@ -27,16 +27,7 @@ function App() {
     return { results };
   }, []);
 
-  const {
-    data,
-    loading,
-    error,
-    handleLoadData,
-    totalPages,
-    finished,
-    page,
-    reset,
-  } = useApi({
+  const { data, loading, error, handleLoadData, finished, reset } = useApi({
     itemsPerPage: 15,
   });
 
@@ -62,7 +53,9 @@ function App() {
     return debounce(setSearchVal, 300);
   }, []);
 
-  console.log({ page, finished, totalPages, data });
+  const toggleShowFilters = useCallback(() => {
+    setShowFilters((prev) => !prev);
+  }, []);
 
   return (
     <main className="container">
@@ -71,14 +64,12 @@ function App() {
           <Search onChange={onSearchValueChange} />
         </div>
         <div>
-          <Button onClick={() => setShowFilters((prev) => !prev)}>
-            Filters
-          </Button>
+          <Button onClick={toggleShowFilters}>Filters</Button>
         </div>
       </div>
       {showFilters && (
         <div className="mt-12">
-          <Filters />
+          <Filters onClear={toggleShowFilters} />
         </div>
       )}
       <div className="mt-12">
@@ -87,6 +78,9 @@ function App() {
           loadData={handlePaginatedLoadData}
           loading={loading}
         >
+          {!loading && data.length === 0 && (
+            <p className="text-center">No results found</p>
+          )}
           <ImageGrid data={data} />
         </InfiniteScroll>
         {loading && <p>Loading...</p>}

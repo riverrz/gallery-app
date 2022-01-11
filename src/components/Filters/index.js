@@ -1,20 +1,11 @@
 import React from "react";
 import styles from "./filters.module.css";
 import { Button, Radio, ResponsiveGrid } from "../atoms";
-import sortOptions from "../../constants/sort.json";
 import filtersOptions from "../../constants/filters.json";
 
-function Filters() {
+function Filters({ onClear }) {
   return (
     <ResponsiveGrid className={styles.container}>
-      <div>
-        <h4 className={styles.optionHeading}>Sort By</h4>
-        <div className="mt-12">
-          {sortOptions.map(({ label, key }) => (
-            <Radio label={label} key={key} value={key} id={key} name="sortBy" />
-          ))}
-        </div>
-      </div>
       {filtersOptions.map(({ label, key: optionKey, choices }) => (
         <div key={optionKey}>
           <h4 className={styles.optionHeading}>{label}</h4>
@@ -32,7 +23,9 @@ function Filters() {
         </div>
       ))}
       <div className="flex align-items-end justify-content-end">
-        <Button secondary>Clear filter</Button>
+        <Button secondary onClick={onClear}>
+          Clear filter
+        </Button>
       </div>
     </ResponsiveGrid>
   );
