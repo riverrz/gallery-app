@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./filters.module.css";
 import { Button, Radio, ResponsiveGrid } from "../atoms";
 import filtersOptions from "../../constants/filters.json";
+import classNames from "classnames";
 
 function Filters({ onClear, appliedFilters, onFilterChange }) {
   return (
@@ -9,7 +10,13 @@ function Filters({ onClear, appliedFilters, onFilterChange }) {
       {filtersOptions.map(({ label, key: optionKey, choices }) => (
         <div key={optionKey}>
           <h4 className={styles.optionHeading}>{label}</h4>
-          <div className="mt-12">
+          <div
+            className={classNames(
+              "mt-12",
+              styles["choice-container"],
+              choices.length > 3 && styles["multi-columns"]
+            )}
+          >
             {choices.map(({ label: choiceLabel, value: choiceValue }) => (
               <Radio
                 label={choiceLabel}

@@ -9,3 +9,11 @@
   font-size: 1.2rem;
   text-transform: uppercase;
 }
+.choice-container {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+.multi-columns {
+  grid-template-columns: 1fr 1fr;
+}
