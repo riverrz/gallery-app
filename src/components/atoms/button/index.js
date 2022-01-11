@@ -11,7 +11,10 @@ export default function Button({
     <button
       className={classNames(
         styles.btn,
-        { "btn--primary": primary, "btn--secondary": secondary },
+        {
+          [styles["btn--primary"]]: primary,
+          [styles["btn--secondary"]]: secondary,
+        },
         className
       )}
       {...rest}

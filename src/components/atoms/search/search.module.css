@@ -6,12 +6,15 @@
   top: 50%;
   transform: translateY(-50%);
   left: 1rem;
+  color: var(--color-primary);
 }
 .search-input {
   outline: none;
   padding: 10px 3rem;
+  padding-right: 1rem;
   border-radius: 15px;
   font-size: 1.2rem;
   display: block;
   width: 100%;
+  border: 1px solid var(--color-primary);
 }
