@@ -11,14 +11,35 @@ import Filters from "./components/Filters";
 import InfiniteScroll from "./hoc/InfiniteScroll";
 import { STAR_WARS_COLLECTION_ID } from "./constants/common";
 
+const DEFAULT_FILTERS = {
+  sort: "relevant",
+  color: "*",
+  orientation: "*",
+};
+
 function App() {
-  const [appliedFilters, setAppliedFilters] = useState({});
+  const [appliedFilters, setAppliedFilters] = useState(DEFAULT_FILTERS);
   const [searchVal, setSearchVal] = useState("");
   const [showFilters, setShowFilters] = useState(false);
 
   const getSearchResults = useCallback(
-    (query, { page, itemsPerPage }) =>
-      searchPhotosByQuery({ query, page, per_page: itemsPerPage }),
+    ({ query, filters }, { page, itemsPerPage }) => {
+      const validFilters = Object.entries(filters).reduce(
+        (acc, [option, value]) => {
+          if (value !== "*") {
+            acc[option] = value;
+          }
+          return acc;
+        },
+        {}
+      );
+      return searchPhotosByQuery({
+        query,
+        page,
+        per_page: itemsPerPage,
+        filters: validFilters,
+      });
+    },
     []
   );
 
@@ -33,7 +54,12 @@ function App() {
 
   useEffect(() => {
     if (searchVal) {
-      handleLoadData(searchVal, getSearchResults, true, true);
+      handleLoadData(
+        { query: searchVal, filters: appliedFilters },
+        getSearchResults,
+        true,
+        true
+      );
     } else {
       reset();
       handleLoadData(
@@ -43,11 +69,16 @@ function App() {
         true
       );
     }
-  }, [searchVal]);
+  }, [searchVal, appliedFilters]);
 
   const handlePaginatedLoadData = useCallback(() => {
-    handleLoadData(searchVal, getSearchResults, true, false);
-  }, [searchVal, handleLoadData, getSearchResults]);
+    handleLoadData(
+      { query: searchVal, filters: appliedFilters },
+      getSearchResults,
+      true,
+      false
+    );
+  }, [searchVal, handleLoadData, getSearchResults, appliedFilters]);
 
   const onSearchValueChange = useMemo(() => {
     return debounce(setSearchVal, 300);
@@ -55,6 +86,15 @@ function App() {
 
   const toggleShowFilters = useCallback(() => {
     setShowFilters((prev) => !prev);
+  }, []);
+
+  const onFilterOptionChange = useCallback((option, value) => {
+    setAppliedFilters((prevFilters) => ({ ...prevFilters, [option]: value }));
+  }, []);
+
+  const onClearFilters = useCallback(() => {
+    setAppliedFilters(DEFAULT_FILTERS);
+    setShowFilters(false);
   }, []);
 
   return (
@@ -69,7 +109,11 @@ function App() {
       </div>
       {showFilters && (
         <div className="mt-12">
-          <Filters onClear={toggleShowFilters} />
+          <Filters
+            onClear={onClearFilters}
+            appliedFilters={appliedFilters}
+            onFilterChange={onFilterOptionChange}
+          />
         </div>
       )}
       <div className="mt-12">
@@ -78,7 +122,7 @@ function App() {
           loadData={handlePaginatedLoadData}
           loading={loading}
         >
-          {!loading && data.length === 0 && (
+          {((!loading && data.length === 0) || !!error) && (
             <p className="text-center">No results found</p>
           )}
           <ImageGrid data={data} />
@@ -88,7 +132,6 @@ function App() {
             <Loader />
           </p>
         )}
-        {error && <p className="error-text">{error.message}</p>}
       </div>
     </main>
   );

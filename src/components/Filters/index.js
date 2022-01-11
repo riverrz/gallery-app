@@ -3,7 +3,7 @@ import styles from "./filters.module.css";
 import { Button, Radio, ResponsiveGrid } from "../atoms";
 import filtersOptions from "../../constants/filters.json";
 
-function Filters({ onClear }) {
+function Filters({ onClear, appliedFilters, onFilterChange }) {
   return (
     <ResponsiveGrid className={styles.container}>
       {filtersOptions.map(({ label, key: optionKey, choices }) => (
@@ -17,6 +17,8 @@ function Filters({ onClear }) {
                 id={`${optionKey}-${choiceValue}`}
                 value={choiceValue}
                 name={optionKey}
+                checked={appliedFilters[optionKey] === choiceValue}
+                onChange={() => onFilterChange(optionKey, choiceValue)}
               />
             ))}
           </div>
