@@ -21,7 +21,7 @@ body {
 }
 .container {
   min-height: 100vh;
-  padding: 5%;
+  padding: 3% 5%;
 }
 
 .flex {

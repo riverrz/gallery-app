@@ -15,6 +15,14 @@ export default function useApi({
   const [page, setPage] = useState(initialPage);
   const [totalPages, setTotalPages] = useState(0);
 
+  const reset = () => {
+    setData(initialData);
+    setLoading(false);
+    setError(null);
+    setPage(initialPage);
+    setTotalPages(0);
+  };
+
   const handleLoadData = useCallback(
     async (params, pagination = false, reset = true) => {
       try {
@@ -73,5 +81,6 @@ export default function useApi({
     totalPages,
     finished: !totalPages || page === totalPages,
     page,
+    reset,
   };
 }

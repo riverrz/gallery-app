@@ -16,15 +16,25 @@ function App() {
     []
   );
 
-  const { data, loading, error, handleLoadData, totalPages, finished, page } =
-    useApi({
-      fetcher: getSearchResults,
-      itemsPerPage: 15,
-    });
+  const {
+    data,
+    loading,
+    error,
+    handleLoadData,
+    totalPages,
+    finished,
+    page,
+    reset,
+  } = useApi({
+    fetcher: getSearchResults,
+    itemsPerPage: 15,
+  });
 
   useEffect(() => {
     if (searchVal) {
       handleLoadData(searchVal, true, true);
+    } else {
+      reset();
     }
   }, [searchVal]);
 
