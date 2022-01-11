@@ -32,7 +32,9 @@ function AppModals({ children }) {
   return (
     <>
       {modals.map(({ content, id }) => (
-        <Modal key={id}>{content}</Modal>
+        <Modal key={id} closeModal={() => closeModal(id)}>
+          {content}
+        </Modal>
       ))}
       <ModalContext.Provider value={contextValue}>
         {children}
