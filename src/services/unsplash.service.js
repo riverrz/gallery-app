@@ -17,3 +17,12 @@ export async function searchPhotosByQuery({ query, page, per_page }) {
   });
   return response.data;
 }
+
+export async function getCollectionPhotos(id) {
+  const response = await axios.get(`/collections/${id}/photos`, {
+    params: {
+      client_id: process.env.REACT_APP_UNSPLASH_ACCESS_KEY,
+    },
+  });
+  return response.data;
+}

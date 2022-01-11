@@ -1,0 +1,2 @@
+
+export const STAR_WARS_COLLECTION_ID = "2423569"

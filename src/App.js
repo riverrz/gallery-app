@@ -1,10 +1,14 @@
 import { useState, useCallback, useEffect, useMemo } from "react";
+import debounce from "lodash.debounce";
 import useApi from "./hooks/useApi";
-import { searchPhotosByQuery } from "./services/unsplash.service";
+import {
+  searchPhotosByQuery,
+  getCollectionPhotos,
+} from "./services/unsplash.service";
 import { Button, Search } from "./components/atoms";
 import ImageGrid from "./components/ImageGrid";
 import InfiniteScroll from "./hoc/InfiniteScroll";
-import debounce from "lodash.debounce";
+import { STAR_WARS_COLLECTION_ID } from "./constants/common";
 
 function App() {
   const [appliedFilters, setAppliedFilters] = useState({});
@@ -16,6 +20,11 @@ function App() {
     []
   );
 
+  const getPhotosByCollectionId = useCallback(async (collectionId) => {
+    const results = await getCollectionPhotos(collectionId);
+    return { results };
+  }, []);
+
   const {
     data,
     loading,
@@ -26,27 +35,32 @@ function App() {
     page,
     reset,
   } = useApi({
-    fetcher: getSearchResults,
     itemsPerPage: 15,
   });
 
   useEffect(() => {
     if (searchVal) {
-      handleLoadData(searchVal, true, true);
+      handleLoadData(searchVal, getSearchResults, true, true);
     } else {
       reset();
+      handleLoadData(
+        STAR_WARS_COLLECTION_ID,
+        getPhotosByCollectionId,
+        false,
+        true
+      );
     }
   }, [searchVal]);
 
   const handlePaginatedLoadData = useCallback(() => {
-    handleLoadData(searchVal, true, false);
-  }, [searchVal, handleLoadData]);
+    handleLoadData(searchVal, getSearchResults, true, false);
+  }, [searchVal, handleLoadData, getSearchResults]);
 
-  const onSearchValueChange = useMemo((val) => {
+  const onSearchValueChange = useMemo(() => {
     return debounce(setSearchVal, 300);
   }, []);
 
-  console.log({ page, finished, totalPages });
+  console.log({ page, finished, totalPages, data });
 
   return (
     <main className="container">
@@ -60,7 +74,7 @@ function App() {
       </div>
       <div className="mt-12">
         <InfiniteScroll
-          finished={finished}
+          finished={finished || !!error}
           loadData={handlePaginatedLoadData}
           loading={loading}
         >

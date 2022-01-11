@@ -4,10 +4,8 @@ const ITEMS_PER_PAGE = 10;
 
 export default function useApi({
   initialData = [],
-  fetcher,
   initialPage = 0,
   itemsPerPage = ITEMS_PER_PAGE,
-  debounceTimeout = 300,
 }) {
   const [data, setData] = useState(initialData);
   const [loading, setLoading] = useState(false);
@@ -24,7 +22,7 @@ export default function useApi({
   };
 
   const handleLoadData = useCallback(
-    async (params, pagination = false, reset = true) => {
+    async (params, fetcher, pagination = false, reset = true) => {
       try {
         setLoading(true);
         setError(null);
@@ -69,7 +67,7 @@ export default function useApi({
         setLoading(false);
       }
     },
-    [fetcher, page, itemsPerPage, totalPages, data, initialPage, initialData]
+    [page, itemsPerPage, totalPages, data, initialPage, initialData]
   );
 
   return {
