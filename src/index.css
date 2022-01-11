@@ -8,6 +8,7 @@
 
 :root {
   --color-primary: dodgerblue;
+  --color-error: rgb(231, 39, 39);
 }
 
 body {
@@ -54,4 +55,7 @@ body {
 }
 .text-center {
   text-align: center;
+}
+.error-text {
+  color: var(--color-error);
 }

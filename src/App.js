@@ -88,7 +88,7 @@ function App() {
             <Loader />
           </p>
         )}
-        {error && <p>{error.message}</p>}
+        {error && <p className="error-text">{error.message}</p>}
       </div>
     </main>
   );
