@@ -7,12 +7,14 @@ import {
 } from "./services/unsplash.service";
 import { Button, Search } from "./components/atoms";
 import ImageGrid from "./components/ImageGrid";
+import Filters from "./components/Filters";
 import InfiniteScroll from "./hoc/InfiniteScroll";
 import { STAR_WARS_COLLECTION_ID } from "./constants/common";
 
 function App() {
   const [appliedFilters, setAppliedFilters] = useState({});
   const [searchVal, setSearchVal] = useState("");
+  const [showFilters, setShowFilters] = useState(false);
 
   const getSearchResults = useCallback(
     (query, { page, itemsPerPage }) =>
@@ -69,9 +71,16 @@ function App() {
           <Search onChange={onSearchValueChange} />
         </div>
         <div>
-          <Button>Filters</Button>
+          <Button onClick={() => setShowFilters((prev) => !prev)}>
+            Filters
+          </Button>
         </div>
       </div>
+      {showFilters && (
+        <div className="mt-12">
+          <Filters />
+        </div>
+      )}
       <div className="mt-12">
         <InfiniteScroll
           finished={finished || !!error}

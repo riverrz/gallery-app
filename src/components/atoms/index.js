@@ -1,7 +1,7 @@
 import Search from "./search";
 import Button from "./button";
-import Checkbox from "./checkbox";
+import Radio from "./radio";
 import ResponsiveGrid from "./responsiveGrid";
 import Card from "./card";
 
-export { Search, Button, Checkbox, ResponsiveGrid, Card };
+export { Search, Button, Radio, ResponsiveGrid, Card };

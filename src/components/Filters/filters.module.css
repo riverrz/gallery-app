@@ -1,0 +1,11 @@
+.container {
+  padding: 20px;
+  background-color: #d3d3d3;
+  color: #333;
+  border-radius: 15px;
+}
+.option-heading {
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+}
