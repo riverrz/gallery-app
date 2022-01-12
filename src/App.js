@@ -10,12 +10,17 @@ import ImageGrid from "./components/ImageGrid";
 import Filters from "./components/Filters";
 import InfiniteScroll from "./hoc/InfiniteScroll";
 import { STAR_WARS_COLLECTION_ID } from "./constants/common";
+import filterOptions from "./constants/filters.json";
 
-const DEFAULT_FILTERS = {
-  sort: "relevant",
-  color: "*",
-  orientation: "*",
-};
+const DEFAULT_FILTERS = filterOptions.reduce((acc, { key, choices }) => {
+  const defaultChoice = choices.find((choice) => {
+    return !!choice.default;
+  });
+  acc[key] = defaultChoice ? defaultChoice.value : "*";
+  return acc;
+}, {});
+
+console.log({ DEFAULT_FILTERS });
 
 function App() {
   const [appliedFilters, setAppliedFilters] = useState(DEFAULT_FILTERS);

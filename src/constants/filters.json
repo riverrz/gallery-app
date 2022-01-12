@@ -5,7 +5,8 @@
     "choices": [
       {
         "label": "Relevance",
-        "value": "relevant"
+        "value": "relevant",
+        "default": true
       },
       {
         "label": "Newest",
@@ -19,11 +20,43 @@
     "choices": [
       {
         "label": "Any color",
-        "value": "*"
+        "value": "*",
+        "default": true
       },
       {
         "label": "Black and White",
         "value": "black_and_white"
+      },
+      {
+        "label": "Yellow",
+        "value": "yellow"
+      },
+      {
+        "label": "Orange",
+        "value": "orange"
+      },
+      {
+        "label": "Red",
+        "value": "red"
+      },
+      {
+        "label": "Blue",
+        "value": "blue"
+      }
+    ]
+  },
+  {
+    "label": "Content Filter",
+    "key": "content_filter",
+    "choices": [
+      {
+        "label": "Low",
+        "value": "low",
+        "default": true
+      },
+      {
+        "label": "High",
+        "value": "high"
       }
     ]
   },
@@ -33,7 +66,8 @@
     "choices": [
       {
         "label": "Any",
-        "value": "*"
+        "value": "*",
+        "default": true
       },
       {
         "label": "Portrait",
