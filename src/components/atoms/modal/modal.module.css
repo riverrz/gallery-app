@@ -5,7 +5,6 @@
   position: fixed;
   top: 0;
   left: 0;
-  cursor: pointer;
 }
 .container {
   position: absolute;
@@ -20,4 +19,11 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+.closeIcon {
+  position: absolute;
+  top: 2%;
+  left: 2%;
+  z-index: 101;
+  cursor: pointer;
 }

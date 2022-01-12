@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { AiOutlineClose } from "react-icons/ai";
 import { Portal } from "..";
 import styles from "./modal.module.css";
 
@@ -12,6 +13,12 @@ function Modal({ children, closeModal }) {
   return (
     <Portal>
       <div className={styles.container}>
+        <AiOutlineClose
+          className={styles.closeIcon}
+          size={32}
+          color="#fff"
+          onClick={closeModal}
+        />
         <div className={styles.overlay} onClick={closeModal} />
         <div className={styles["modal-body"]}>{children}</div>
       </div>
