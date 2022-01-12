@@ -20,8 +20,6 @@ const DEFAULT_FILTERS = filterOptions.reduce((acc, { key, choices }) => {
   return acc;
 }, {});
 
-console.log({ DEFAULT_FILTERS });
-
 function App() {
   const [appliedFilters, setAppliedFilters] = useState(DEFAULT_FILTERS);
   const [searchVal, setSearchVal] = useState("");
@@ -102,6 +100,8 @@ function App() {
     setShowFilters(false);
   }, []);
 
+  const showNoResultsFound = (!loading && data.length === 0) || !!error;
+
   return (
     <main className="container">
       <div className="flex perfect-center">
@@ -127,7 +127,7 @@ function App() {
           loadData={handlePaginatedLoadData}
           loading={loading}
         >
-          {((!loading && data.length === 0) || !!error) && (
+          {showNoResultsFound && (
             <p className="text-center">No results found</p>
           )}
           <ImageGrid data={data} />
