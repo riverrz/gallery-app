@@ -58,6 +58,7 @@ function App() {
   });
 
   useEffect(() => {
+    reset();
     if (searchVal) {
       handleLoadData(
         { query: searchVal, filters: appliedFilters },
@@ -66,7 +67,6 @@ function App() {
         true
       );
     } else {
-      reset();
       handleLoadData(
         STAR_WARS_COLLECTION_ID,
         getPhotosByCollectionId,
