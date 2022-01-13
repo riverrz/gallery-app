@@ -11,6 +11,7 @@ import Filters from "./components/Filters";
 import InfiniteScroll from "./hoc/InfiniteScroll";
 import { STAR_WARS_COLLECTION_ID } from "./constants/common";
 import filterOptions from "./constants/filters.json";
+import { getValidFilters } from "./helpers";
 
 const DEFAULT_FILTERS = filterOptions.reduce((acc, { key, choices }) => {
   const defaultChoice = choices.find((choice) => {
@@ -27,29 +28,26 @@ function App() {
 
   const getSearchResults = useCallback(
     ({ query, filters }, { page, itemsPerPage }) => {
-      const validFilters = Object.entries(filters).reduce(
-        (acc, [option, value]) => {
-          if (value !== "*") {
-            acc[option] = value;
-          }
-          return acc;
-        },
-        {}
-      );
       return searchPhotosByQuery({
         query,
         page,
         per_page: itemsPerPage,
-        filters: validFilters,
+        filters: getValidFilters(filters),
       });
     },
     []
   );
 
-  const getPhotosByCollectionId = useCallback(async (collectionId) => {
-    const results = await getCollectionPhotos(collectionId);
-    return { results };
-  }, []);
+  const getPhotosByCollectionId = useCallback(
+    async ({ collectionId, filters }) => {
+      const results = await getCollectionPhotos({
+        collectionId,
+        filters: getValidFilters(filters),
+      });
+      return { results };
+    },
+    []
+  );
 
   const { data, loading, error, handleLoadData, finished, reset } = useApi({
     itemsPerPage: 15,
@@ -66,7 +64,7 @@ function App() {
       );
     } else {
       handleLoadData(
-        STAR_WARS_COLLECTION_ID,
+        { collectionId: STAR_WARS_COLLECTION_ID, filters: appliedFilters },
         getPhotosByCollectionId,
         false,
         true

@@ -24,10 +24,11 @@ export async function searchPhotosByQuery({
   return response.data;
 }
 
-export async function getCollectionPhotos(id) {
-  const response = await axios.get(`/collections/${id}/photos`, {
+export async function getCollectionPhotos({ collectionId, filters = {} }) {
+  const response = await axios.get(`/collections/${collectionId}/photos`, {
     params: {
       client_id: process.env.REACT_APP_UNSPLASH_ACCESS_KEY,
+      ...filters,
     },
   });
   return response.data;
