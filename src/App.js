@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect, useMemo } from "react";
 import debounce from "lodash.debounce";
+import { FaFilter } from "react-icons/fa";
 import useApi from "./hooks/useApi";
 import {
   searchPhotosByQuery,
@@ -11,7 +12,7 @@ import Filters from "./components/Filters";
 import InfiniteScroll from "./hoc/InfiniteScroll";
 import { STAR_WARS_COLLECTION_ID } from "./constants/common";
 import filterOptions from "./constants/filters.json";
-import { getValidFilters } from "./helpers";
+import { getValidFilters, isMobile } from "./helpers";
 
 const DEFAULT_FILTERS = filterOptions.reduce((acc, { key, choices }) => {
   const defaultChoice = choices.find((choice) => {
@@ -107,7 +108,9 @@ function App() {
           <Search onChange={onSearchValueChange} />
         </div>
         <div>
-          <Button onClick={toggleShowFilters}>Filters</Button>
+          <Button onClick={toggleShowFilters}>
+            {isMobile() ? <FaFilter size={20} /> : "Filters"}
+          </Button>
         </div>
       </div>
       {showFilters && (
