@@ -1,1 +1,1 @@
-# Assignment for colearn
+### A gallery app built with ReactJS
